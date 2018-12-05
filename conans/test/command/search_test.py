@@ -82,6 +82,26 @@ conan_vars4 = """[settings]
   HelloInfo1/0.45@myuser/testing:33333
 """
 
+conan_vars_tool_winx86 = """[settings]
+  os_build=Windows
+  arch_build=x86
+"""
+
+conan_vars_tool_winx64 = """[settings]
+  os_build=Windows
+  arch_build=x86_64
+"""
+
+conan_vars_tool_linx86 = """[settings]
+  os_build=Linux
+  arch_build=x86
+"""
+
+conan_vars_tool_linx64 = """[settings]
+  os_build=Linux
+  arch_build=x86_64
+"""
+
 
 class SearchTest(unittest.TestCase):
 
@@ -105,6 +125,7 @@ class SearchTest(unittest.TestCase):
         root_folder5 = 'MissFile/1.0.2/myuser/stable'
         root_folder11 = 'Hello/1.4.11/myuser/testing'
         root_folder12 = 'Hello/1.4.12/myuser/testing'
+        root_folder_tool = 'Tool/1.0.0/myuser/testing'
 
         self.client.save({"Empty/1.10/fake/test/export/fake.txt": "//",
                           "%s/%s/WindowsPackageSHA/%s" % (root_folder1,
@@ -133,7 +154,19 @@ class SearchTest(unittest.TestCase):
                                                        CONANINFO): conan_vars4,
                           "%s/%s/e4f7vdwcv4w55d/%s" % (root_folder5,
                                                        PACKAGES_FOLDER,
-                                                       "hello.txt"): "Hello"},
+                                                       "hello.txt"): "Hello",
+                          "%s/%s/winx86/%s" % (root_folder_tool,
+                                               PACKAGES_FOLDER,
+                                               CONANINFO): conan_vars_tool_winx86,
+                          "%s/%s/winx64/%s" % (root_folder_tool,
+                                               PACKAGES_FOLDER,
+                                               CONANINFO): conan_vars_tool_winx64,
+                          "%s/%s/linx86/%s" % (root_folder_tool,
+                                               PACKAGES_FOLDER,
+                                               CONANINFO): conan_vars_tool_linx86,
+                          "%s/%s/linx64/%s" % (root_folder_tool,
+                                               PACKAGES_FOLDER,
+                                               CONANINFO): conan_vars_tool_linx64},
                          self.client.paths.store)
 
         # Fake some manifests to be able to calculate recipe hash
